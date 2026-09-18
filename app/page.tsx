@@ -94,14 +94,19 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 className="size-[18px] fill-sky-500"
               >
-                <path d="M12 1.5l2.7 2.06 3.38-.44 1.32 3.15 3.1 1.4-.6 3.36L24 13.5l-2.1 2.47.6 3.36-3.1 1.4-1.32 3.15-3.38-.44L12 25.5l-2.7-2.06-3.38.44-1.32-3.15-3.1-1.4.6-3.36L0 13.5l2.1-2.47-.6-3.36 3.1-1.4L5.92 3.12l3.38.44L12 1.5z" transform="scale(1 .92)" />
+                <path
+                  d="M12 1.5l2.7 2.06 3.38-.44 1.32 3.15 3.1 1.4-.6 3.36L24 13.5l-2.1 2.47.6 3.36-3.1 1.4-1.32 3.15-3.38-.44L12 25.5l-2.7-2.06-3.38.44-1.32-3.15-3.1-1.4.6-3.36L0 13.5l2.1-2.47-.6-3.36 3.1-1.4L5.92 3.12l3.38.44L12 1.5z"
+                  transform="scale(1 .92)"
+                />
                 <path
                   d="M10.6 16.2l-3.1-3.1 1.4-1.4 1.7 1.7 4.5-4.5 1.4 1.4-5.9 5.9z"
                   className="fill-background"
                 />
               </svg>
             </h1>
-            <p className="text-[15px] text-muted">Full-stack Software Engineer</p>
+            <p className="text-[15px] text-muted">
+              Full-stack Software Engineer
+            </p>
           </div>
           <SocialLinks />
         </header>
@@ -109,12 +114,15 @@ export default function Home() {
         <div className="mt-8 space-y-6 text-[17px] leading-[1.85] text-muted">
           <p>
             I&apos;m a full-stack engineer. Right now I&apos;m building{" "}
-            <CompanyLink href="https://askoga.vercel.app" icon="/logos/askoga.png">
+            <CompanyLink
+              href="https://askoga.vercel.app"
+              icon="/logos/askoga.png"
+            >
               askOga
             </CompanyLink>
             , an AI director that tells you what to post today. It writes the
-            script, the shots and the caption. You just hit record. Before
-            that I was a frontend developer at{" "}
+            script, the shots and the caption. You just hit record. Before that
+            I was a frontend developer at{" "}
             <CompanyLink href="https://payfrica.xyz" icon="/logos/payfrica.png">
               Payfrica
             </CompanyLink>
@@ -122,20 +130,26 @@ export default function Home() {
           </p>
           <p>
             I created{" "}
-            <CompanyLink href="https://kinta-sme.com" icon="/logos/kintasme.ico">
+            <CompanyLink
+              href="https://kinta-sme.com"
+              icon="/logos/kintasme.ico"
+            >
               Kinta SME
             </CompanyLink>
             , where thousands of people buy data and airtime, and{" "}
-            <CompanyLink href="https://resellos.site" icon="/logos/resellos.svg">
+            <CompanyLink
+              href="https://resellos.site"
+              icon="/logos/resellos.svg"
+            >
               Resellos
             </CompanyLink>
-            , which lets anyone spin up their own VTU website.{" "}
-            I&apos;m also co-founding{" "}
+            , which lets anyone spin up their own VTU website. I&apos;m also
+            co-founding{" "}
             <CompanyLink href="https://loota.site" icon="/logos/loota.png">
               Loota
             </CompanyLink>
-            , a WhatsApp marketplace that finds what you need from sellers
-            near you and holds the money in escrow until the deal is done.
+            , a WhatsApp marketplace that finds what you need from sellers near
+            you and holds the money in escrow until the deal is done.
           </p>
           <p>
             I live in{" "}
@@ -151,12 +165,12 @@ export default function Home() {
                 <rect x="16" width="8" height="16" fill="#008751" />
               </svg>
             </span>
-            . These days I&apos;m at{" "}
+            . I used to be I&apos;m at{" "}
             <CompanyLink href="https://voultron.fun" icon="/logos/voultron.svg">
               Voultron
             </CompanyLink>
-            , working on a play-and-earn blockchain gaming platform. If you
-            want to talk,{" "}
+            , working on a play-and-earn blockchain gaming platform. If you want
+            to talk,{" "}
             <InlineLink
               href="mailto:s00laimang@icloud.com"
               tooltip="s00laimang@icloud.com"
@@ -164,7 +178,10 @@ export default function Home() {
               email me
             </InlineLink>
             , or see my code on{" "}
-            <InlineLink href="https://github.com/SoolaimanG" tooltip="@SoolaimanG">
+            <InlineLink
+              href="https://github.com/s00laimang"
+              tooltip="@s00laimang"
+            >
               GitHub
             </InlineLink>
             .
