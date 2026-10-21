@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import { buttonPrimary } from "./button-styles";
+import { bookCall } from "./contact";
 import { GRAIN } from "./showcase";
 
-const EMAIL = "s00laimang@icloud.com";
 
 // answers marked PLACEHOLDER are promises to clients: confirm before launch
 const FAQS = [
@@ -183,7 +183,7 @@ export function Faq() {
               </div>
             </div>
             <a
-              href={`mailto:${EMAIL}`}
+              {...bookCall}
               className={`${buttonPrimary} shrink-0 justify-center`}
             >
               Book a call
