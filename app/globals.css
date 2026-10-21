@@ -23,6 +23,28 @@
   }
 }
 
+/* phone baseline: no grey tap flash (every control has its own :active
+   feedback), no landscape font inflation */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* taps fire immediately instead of waiting to see if it's a double-tap zoom */
+a,
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* holding a finger on a button shouldn't select its label; content text stays
+   selectable */
+button,
+[role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -117,4 +139,394 @@ body {
 
 .thin-scrollbar::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* agency headline chip: spinner "loads" for a beat, then pops into eyes */
+.chip-loading {
+  animation: chip-out 0.25s cubic-bezier(0.23, 1, 0.32, 1) 2.5s forwards;
+}
+
+.chip-eyes {
+  opacity: 0;
+  transform: scale(0.5);
+  animation: chip-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 2.6s forwards;
+}
+
+@keyframes chip-out {
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes chip-in {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* agency headline eyes: glance left, then right, then back */
+.eyes-look {
+  animation: eyes-look 5s ease-in-out 3.2s infinite;
+}
+
+@keyframes eyes-look {
+  0%, 30%, 100% {
+    transform: translateX(0);
+  }
+  38%, 55% {
+    transform: translateX(-2px);
+  }
+  63%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyes-look {
+    animation: none;
+  }
+
+  .chip-loading {
+    display: none;
+  }
+
+  .chip-eyes {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* agency work marquee: two identical tracks slide left forever, pause on hover */
+.work-marquee {
+  overflow: hidden;
+}
+
+.work-track {
+  animation: work-scroll 150s linear infinite;
+}
+
+/* mouse only: on touch a tap would "hover" and freeze the marquee until the
+   next tap somewhere else */
+@media (hover: hover) and (pointer: fine) {
+  .work-marquee:hover .work-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes work-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* no motion: a still row the visitor can scroll sideways instead */
+@media (prefers-reduced-motion: reduce) {
+  .work-marquee {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+  }
+
+  .work-half > * {
+    scroll-snap-align: start;
+  }
+
+  .work-track {
+    animation: none;
+  }
+
+  .work-half[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* agency logo stack: one shared tooltip glides between logos (x) while the
+   body handles its own enter/exit, so first appearance lands without sliding */
+.tip-x {
+  transition: transform 200ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.tip-x[data-snap] {
+  transition: none;
+}
+
+.tip-body {
+  transform-origin: bottom center;
+  transition:
+    opacity 150ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tip-body:not([data-open]) {
+  opacity: 0;
+  transform: translateY(4px) scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tip-x {
+    transition: none;
+  }
+
+  .tip-body,
+  .tip-body:not([data-open]) {
+    transform: none;
+    transition: opacity 150ms ease;
+  }
+}
+
+/* services cards: each graphic acts out its service when the card is hovered
+   or a link inside it is focused. pieces carry their own --hx/--hy/--hs/--hr
+   targets and a --hd stagger; motion only for fine pointers, none if reduced */
+.svc-move,
+.svc-scale,
+.svc-turn {
+  transition:
+    translate 450ms cubic-bezier(0.23, 1, 0.32, 1),
+    scale 450ms cubic-bezier(0.23, 1, 0.32, 1),
+    rotate 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--hd, 0ms);
+}
+
+.svc-glow {
+  opacity: 0.7;
+  transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svc-card:hover .svc-glow,
+  .svc-card:focus-within .svc-glow {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .svc-card:hover .svc-move,
+  .svc-card:focus-within .svc-move {
+    translate: var(--hx, 0px) var(--hy, 0px);
+  }
+
+  .svc-card:hover .svc-scale,
+  .svc-card:focus-within .svc-scale {
+    scale: var(--hs, 1);
+  }
+
+  .svc-card:hover .svc-turn,
+  .svc-card:focus-within .svc-turn {
+    rotate: var(--hr, 0deg);
+  }
+}
+
+/* pricing field: each "+" rests at --o1 and, while its card is hovered or
+   focused, eases to --o2; the --d delay sweeps the change left to right */
+.pf-cell {
+  opacity: var(--o1, 0.3);
+  transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .price-card:hover .pf-cell,
+  .price-card:focus-within .pf-cell {
+    opacity: var(--o2, 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-cell {
+    transition-delay: 0ms;
+  }
+}
+
+/* agency footer: the cropped wordmark peeks up a little while the card is
+   hovered, the same reveal as the services "?" */
+.footer-wordmark {
+  transition: translate 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .footer-card:hover .footer-wordmark {
+    translate: 0 -0.08em;
+  }
+}
+
+/* project card → story page: the tapped card morphs into the story's big
+   card. drawer-style curve so it settles rather than stops; a brief blur
+   mid-flight hides the screenshot scaling. the rest of the page crossfades
+   quickly so the morph is the only thing that reads as movement */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: morph-blur;
+}
+
+@keyframes morph-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* navbar and "back to top" jumps glide instead of teleporting */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+  }
+}
+
+/* agency mobile menu: the card comes out of the floating button in two
+   steps. it starts as a small square (button height) sitting on the button,
+   widens to full width, then grows up to full height. closing runs the same
+   steps backwards and the square fades into the button */
+.menu-panel {
+  visibility: hidden;
+  will-change: clip-path;
+}
+
+.menu-panel[data-phase="open"] {
+  visibility: visible;
+  animation: menu-open 640ms both;
+}
+
+.menu-panel[data-phase="closing"] {
+  visibility: visible;
+  animation: menu-close 440ms both;
+}
+
+@keyframes menu-open {
+  0% {
+    clip-path: inset(calc(100% - 46px) calc(50% - 23px) 0 calc(50% - 23px) round 6px);
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  42% {
+    clip-path: inset(calc(100% - 46px) 0 0 0 round 6px);
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  100% {
+    clip-path: inset(0 0 0 0 round 6px);
+  }
+}
+
+@keyframes menu-close {
+  0% {
+    clip-path: inset(0 0 0 0 round 6px);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  50% {
+    clip-path: inset(calc(100% - 46px) 0 0 0 round 6px);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(calc(100% - 46px) calc(50% - 23px) 0 calc(50% - 23px) round 6px);
+    opacity: 0;
+  }
+}
+
+/* links arrive once the card has widened, nearest the button first */
+.menu-item {
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity 120ms ease,
+    translate 120ms ease,
+    background-color 150ms ease;
+}
+
+.menu-panel[data-phase="open"] .menu-item {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 280ms cubic-bezier(0.23, 1, 0.32, 1) calc(240ms + var(--i, 0) * 40ms),
+    translate 280ms cubic-bezier(0.23, 1, 0.32, 1) calc(240ms + var(--i, 0) * 40ms),
+    background-color 150ms ease;
+}
+
+.menu-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 380ms ease,
+    visibility 0s linear 380ms;
+}
+
+.menu-backdrop[data-phase="open"] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 380ms ease,
+    visibility 0s;
+}
+
+/* the two lines of the menu icon cross into an × while open */
+.menu-icon > span {
+  transition:
+    translate 200ms cubic-bezier(0.77, 0, 0.175, 1),
+    rotate 200ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.menu-icon[data-open] > span:first-child {
+  translate: 0 4.25px;
+  rotate: 45deg;
+}
+
+.menu-icon[data-open] > span:last-child {
+  translate: 0 -4.25px;
+  rotate: -45deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* no growing shape: the card simply fades in and out */
+  .menu-panel[data-phase="open"] {
+    animation: menu-fade-in 200ms ease both;
+  }
+
+  .menu-panel[data-phase="closing"] {
+    animation: menu-fade-out 200ms ease both;
+  }
+
+  .menu-item,
+  .menu-panel[data-phase="open"] .menu-item {
+    translate: 0 0;
+    transition-delay: 0s;
+  }
+
+  .menu-icon > span {
+    transition: none;
+  }
+}
+
+@keyframes menu-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes menu-fade-out {
+  to {
+    opacity: 0;
+  }
 }

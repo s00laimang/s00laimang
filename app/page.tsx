@@ -165,11 +165,11 @@ export default function Home() {
                 <rect x="16" width="8" height="16" fill="#008751" />
               </svg>
             </span>
-            . I used to be I&apos;m at{" "}
+            . I used to work at{" "}
             <CompanyLink href="https://voultron.fun" icon="/logos/voultron.svg">
               Voultron
             </CompanyLink>
-            , working on a play-and-earn blockchain gaming platform. If you want
+            , building a play-to-earn blockchain gaming platform. If you want
             to talk,{" "}
             <InlineLink
               href="mailto:s00laimang@icloud.com"

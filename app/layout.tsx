@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -18,6 +18,16 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// browser chrome and the phone status bar take the page's own background in
+// each scheme, instead of a default white or black bar
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf8f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#131211" },
+  ],
+  colorScheme: "light dark",
+};
 
 export const metadata: Metadata = {
   title: "s00laimang — Full-stack Software Engineer",

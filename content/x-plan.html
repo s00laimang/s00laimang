@@ -1,0 +1,583 @@
+<title>s00laimang X Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one calm reading column, a sticky tab bar, calendar days as rows, drafts as copyable cards.
+   Colours borrow the agency site's warm ink and the six service-card hues for the post types. */
+:root {
+  --bg: #f6f4ef;
+  --surface: #fffdf9;
+  --sunk: #eeebe4;
+  --ink: #21201c;
+  --muted: #6f6a61;
+  --line: rgba(33, 32, 28, 0.1);
+  --accent: #e0844a;
+  --ready: #3b9463;
+  --make: #c98a2b;
+  --wait: #b0506f;
+  --t-shot: #4a7fd6;
+  --t-rec: #d0457f;
+  --t-code: #8a6fd4;
+  --t-meme: #e0844a;
+  --t-text: #8a8378;
+  --t-thread: #3b9463;
+  --t-ba: #2f8f8a;
+  --display: "Instrument Serif", "Louize", Georgia, "Times New Roman", serif;
+  --body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141412; --surface: #1c1c19; --sunk: #232320; --ink: #ecE8df; --muted: #a29d93;
+    --line: rgba(236, 232, 223, 0.1); --accent: #ec9a63; --ready: #5fbf8a; --make: #e0a84e; --wait: #e07c9c;
+    --t-shot: #7aa3ea; --t-rec: #e77aa6; --t-code: #ab95ea; --t-meme: #ec9a63; --t-text: #b3ac9f; --t-thread: #5fbf8a; --t-ba: #5cc0ba;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141412; --surface: #1c1c19; --sunk: #232320; --ink: #ece8df; --muted: #a29d93;
+  --line: rgba(236, 232, 223, 0.1); --accent: #ec9a63; --ready: #5fbf8a; --make: #e0a84e; --wait: #e07c9c;
+  --t-shot: #7aa3ea; --t-rec: #e77aa6; --t-code: #ab95ea; --t-meme: #ec9a63; --t-text: #b3ac9f; --t-thread: #5fbf8a; --t-ba: #5cc0ba;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body);
+  font-size: 15px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 880px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; letter-spacing: -0.01em; text-wrap: balance; margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+header.top { padding-block: 48px 20px; display: grid; gap: 10px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+h1 { font-size: clamp(40px, 7vw, 64px); line-height: 1.02; }
+h1 em { font-style: italic; color: var(--accent); }
+.lede { color: var(--muted); max-width: 60ch; margin: 0; }
+
+.next {
+  margin-top: 18px; background: var(--ink); color: var(--bg); border-radius: 8px;
+  padding: 18px 20px; display: grid; gap: 6px;
+}
+.next .eyebrow { color: color-mix(in srgb, var(--bg) 65%, transparent); }
+.next h2 { font-size: 26px; line-height: 1.15; }
+.next .meta { font-size: 13px; color: color-mix(in srgb, var(--bg) 75%, transparent); }
+.next a.go { justify-self: start; margin-top: 6px; font-size: 13px; font-weight: 500; text-decoration: none;
+  background: var(--bg); color: var(--ink); padding: 6px 12px; border-radius: 6px; }
+
+nav.tabs {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg);
+  display: flex; gap: 4px; padding-block: 10px; margin-top: 24px; border-bottom: 1px solid var(--line);
+  overflow-x: auto; scrollbar-width: none;
+}
+nav.tabs a {
+  text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; color: var(--muted); white-space: nowrap;
+}
+nav.tabs a:hover { color: var(--ink); background: var(--sunk); }
+
+section.block { padding-top: 36px; scroll-margin-top: 60px; }
+section.block > h2 { font-size: 36px; line-height: 1.1; }
+section.block > .sub { color: var(--muted); margin: 6px 0 0; max-width: 62ch; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; line-height: 1;
+  padding: 5px 8px; border-radius: 5px; background: var(--sunk); color: var(--ink); white-space: nowrap;
+}
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--muted)); display: inline-block; }
+.status { font-size: 12px; font-weight: 500; padding: 4px 8px; border-radius: 5px; white-space: nowrap; display: inline-block;
+  color: var(--s); background: color-mix(in srgb, var(--s) 13%, transparent); }
+.status.ready { --s: var(--ready); }
+.status.make { --s: var(--make); }
+.status.wait { --s: var(--wait); }
+
+.week { margin-top: 28px; }
+.week h3 { font-size: 24px; }
+.week .theme { color: var(--muted); font-size: 14px; margin: 2px 0 10px; }
+.days { border-top: 1px solid var(--line); }
+.day {
+  display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 14px;
+  padding: 14px 8px; border-bottom: 1px solid var(--line); border-radius: 6px;
+}
+.day.today { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.day.off { color: var(--muted); padding-block: 9px; }
+.date { font-family: var(--mono); font-size: 12px; line-height: 1.35; color: var(--muted); font-variant-numeric: tabular-nums; }
+.date b { display: block; font-family: var(--body); font-size: 15px; font-weight: 600; color: var(--ink); }
+.day.off .date b { color: var(--muted); font-weight: 400; }
+.today-tag { display: inline-block; margin-top: 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; }
+.day .body { min-width: 0; display: grid; gap: 7px; }
+.day .proj { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.day .post { font-weight: 500; }
+.day .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.day .need { font-size: 13.5px; color: var(--muted); }
+.day .need code, .card code { font-family: var(--mono); font-size: 12px; background: var(--sunk); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.day a.draft-link { font-size: 12.5px; font-weight: 500; color: var(--accent); text-decoration: none; }
+.day a.draft-link:hover { text-decoration: underline; }
+.day.posted .post { text-decoration: line-through; text-decoration-color: var(--muted); }
+
+.group-title { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 34px 0 0; }
+.group-note { color: var(--muted); font-size: 14px; margin: 4px 0 0; max-width: 62ch; }
+
+.cards { display: grid; gap: 16px; margin-top: 16px; }
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px;
+  display: grid; gap: 14px; scroll-margin-top: 64px; min-width: 0;
+}
+.card.posted { opacity: 0.62; }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between; }
+.card-head h3 { font-size: 26px; line-height: 1.15; }
+.card-head .num { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-right: 8px; }
+.card .when { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.format { font-size: 13.5px; color: var(--muted); }
+.format strong { color: var(--ink); font-weight: 500; }
+.make { font-size: 13.5px; background: var(--sunk); border-radius: 6px; padding: 10px 12px; }
+.make b { font-weight: 600; }
+
+.tweet {
+  border-left: 2px solid var(--accent); padding: 2px 0 2px 16px; font-size: 16px; line-height: 1.55;
+  white-space: normal; max-width: 62ch;
+}
+.tweet p { margin: 0 0 10px; white-space: pre-line; }
+.tweet { font-size: 19px; }
+.rule { margin-top: 16px; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 14px 16px; display: grid; gap: 4px; max-width: 62ch; }
+.rule b { font-weight: 600; }
+.rule p { margin: 0; color: var(--muted); font-size: 14px; }
+.tweet p:last-child { margin-bottom: 0; }
+.tweet .placeholder { color: var(--wait); font-style: italic; }
+.chars { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.chars.over { color: var(--wait); }
+
+.imgs { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.imgs.wide { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
+.imgs figure { margin: 0; min-width: 0; }
+.imgs img { width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--line); background: var(--sunk); }
+.imgs figcaption { font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-top: 4px; overflow-wrap: anywhere; }
+
+pre.code { margin: 0; background: var(--sunk); border-radius: 6px; padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: 13px; }
+
+.reply { border-top: 1px dashed var(--line); padding-top: 14px; display: grid; gap: 10px; }
+.reply-label { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button {
+  font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 6px; padding: 7px 12px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+}
+button:hover { background: var(--sunk); }
+button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button.primary:hover { background: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
+button[aria-pressed="true"] { background: color-mix(in srgb, var(--ready) 16%, transparent); border-color: color-mix(in srgb, var(--ready) 40%, transparent); color: var(--ready); }
+.copied { font-size: 12.5px; color: var(--ready); }
+
+.guide { display: grid; gap: 12px; margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.guide .g { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; min-width: 0; }
+.guide h4 { margin: 0 0 6px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.guide ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+.guide li { margin: 3px 0; }
+
+.never { margin-top: 16px; display: grid; gap: 10px; }
+.never div { border-left: 2px solid var(--wait); padding: 2px 0 2px 14px; max-width: 70ch; }
+.never b { font-weight: 600; }
+.never p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+
+.rhythm { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 8px; margin-top: 16px; }
+.rhythm div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.rhythm b { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; display: block; }
+.rhythm span { font-size: 14px; }
+
+footer { margin-top: 56px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 560px) {
+  .day { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .date b { display: inline; margin-right: 6px; }
+  .card { padding: 16px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Build in public · X / Twitter</div>
+    <h1>One post a day, <em>made from what you're already building</em></h1>
+    <p class="lede">The posting plan from 22 October to 22 November. It's built from every project you're working on: the agency page, client work with names removed, the three concept sites and your lead hunting. Each post says exactly what to attach or make first.</p>
+    <div class="next" id="next" hidden></div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a href="#calendar">Calendar</a>
+    <a href="#drafts">Drafts</a>
+    <a href="#assets">How to make assets</a>
+    <a href="#rules">Never post</a>
+    <a href="#rhythm">Weekly rhythm</a>
+  </nav>
+
+  <section class="block" id="calendar">
+    <h2>Calendar</h2>
+    <p class="sub">Click a draft link to jump to its full text. Marking a draft as posted crosses it off here. That only saves in this browser, so log the real results in <code>content/post-log.md</code> too.</p>
+    <div class="legend" id="legend"></div>
+    <div id="weeks"></div>
+  </section>
+
+  <section class="block" id="drafts">
+    <h2>Drafts</h2>
+    <p class="sub">Exact text to paste, in posting order.</p>
+    <div class="rule">
+      <b>One line, then the work</b>
+      <p>Your 5-word post ("loving this services card 😍") beat the long one. Showcase posts that do well on X are usually one sentence that leads with the thing and lets the image or video speak. Write lowercase, like texting a friend. Extra context goes in a reply to yourself.</p>
+    </div>
+    <div id="draft-groups"></div>
+  </section>
+
+  <section class="block" id="assets">
+    <h2>How to make assets</h2>
+    <p class="sub">Every post is one of these types. Here's how to make each one look good on X.</p>
+    <div class="guide" id="guide"></div>
+  </section>
+
+  <section class="block" id="rules">
+    <h2>Never post</h2>
+    <p class="sub">Check this before anything goes out.</p>
+    <div class="never">
+      <div><b>plugMee</b><p>Nothing at all. It's an 18+ product, which would hurt an agency brand for small businesses, and the TikTok research involves real people's personal data.</p></div>
+      <div><b>Client names and brands</b><p>usa247data, Sesto Elemento, IBT Prog, Payfrica and Landzun stay anonymous unless the client says yes.</p></div>
+      <div><b>Client code</b><p>Nothing copied straight from private repos. Claude writes a generic example of the same idea instead.</p></div>
+      <div><b>Prices</b><p>The /agency prices are placeholders.</p></div>
+      <div><b>Concept sites as client work</b><p>Brisbane Party Hire, Dream Clean and Virzi are concepts. Name them and tell the story, but never call them clients. The Dream Clean "founder" photo is AI-generated, so never post it as a real person.</p></div>
+      <div><b>Pitch details</b><p>No owners' names, emails or handles. Don't tag the businesses, and don't post the problems you found on their current sites (that's for the pitch). Let each owner hear from you before they see it on X.</p></div>
+      <div><b>Private details</b><p>Names, phone numbers, ABNs, the lead tracker, business revenue or transaction numbers, API keys and private dashboard URLs.</p></div>
+      <div><b>dreamclean-flow.mp4</b><p>It still has the FocuSee watermark, and nobody has checked the ending.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="rhythm">
+    <h2>Weekly rhythm</h2>
+    <p class="sub">Post when you can stay online for 30 minutes afterwards. Keep the same time for two weeks so the results are comparable. Links go in a reply, never in the post.</p>
+    <div class="rhythm">
+      <div><b>Mon</b><span>Something you built, ideally a recording</span></div>
+      <div><b>Tue</b><span>A tip for business owners</span></div>
+      <div><b>Wed</b><span>Code or behind the build</span></div>
+      <div><b>Thu</b><span>Trust: how you work</span></div>
+      <div><b>Fri</b><span>Meme or question</span></div>
+      <div><b>Sat</b><span>A story or project</span></div>
+      <div><b>Sun</b><span>Off. Reply to people.</span></div>
+    </div>
+  </section>
+
+  <footer>Source files: <code>content/calendar.md</code>, <code>content/drafts.md</code>, <code>content/post-log.md</code>. Claude updates this page whenever the plan changes.</footer>
+</div>
+
+<script>
+const TYPES = {
+  shot:   { label: "Screenshot",   c: "--t-shot" },
+  rec:    { label: "Recording",    c: "--t-rec" },
+  code:   { label: "Code",         c: "--t-code" },
+  meme:   { label: "Meme",         c: "--t-meme" },
+  text:   { label: "Text",         c: "--t-text" },
+  thread: { label: "Thread",       c: "--t-thread" },
+  ba:     { label: "Before/after", c: "--t-ba" },
+};
+const STATUS = { ready: "Ready", make: "Make asset", wait: "Wait for OK" };
+
+const WEEKS = [
+  { title: "This week", theme: "Ride the services-card momentum", days: [
+    { d: "2026-10-22", proj: "Agency page", post: "The cards, after dark (quote your first post)", types: ["shot"], need: "<code>exports/services-twitter-dark.jpg</code>", status: "ready", draft: 1 },
+    { d: "2026-10-23", proj: "Agency page", post: "Voice typing vs my accent: \"greens\" was grains", types: ["text", "meme"], need: "Optional: a screenshot of the real prompts in your chat", status: "ready", draft: 6 },
+    { d: "2026-10-24", proj: "Agency page", post: "Every card got its own shape", types: ["shot"], need: "Square light cards 1–4, then 5–6 in a reply", status: "ready", draft: 2 },
+    { d: "2026-10-25", off: true },
+  ]},
+  { title: "Week 1", theme: "The agency page, plus lessons from client work with names removed", days: [
+    { d: "2026-10-26", proj: "Agency page", post: "My headline does a little memory trick", types: ["rec"], need: "10–12s: hard-reload /agency, the spinner turns into eyes, hover the photo stack, slide across the logo badge", status: "make", draft: 7 },
+    { d: "2026-10-27", proj: "Agency page", post: "\"Near me\": invisible on Google Maps", types: ["shot"], need: "<code>service-4-seo-google-dark.jpg</code>", status: "ready", draft: 3 },
+    { d: "2026-10-28", proj: "Client site (no name)", post: "One line: 4px of space on a phone, 100px on desktop", types: ["code"], need: "A ray.so image of the clamp() line", status: "make", draft: 8 },
+    { d: "2026-10-29", proj: "Agency page", post: "The developer who stops replying", types: ["shot"], need: "<code>service-5-care-updates-light.jpg</code>", status: "ready", draft: 4 },
+    { d: "2026-10-30", proj: "Client site (no name)", post: "\"I asked for two LinkedIn links. The AI redesigned the whole team section.\"", types: ["meme"], need: "Two-panel meme: What I asked for / What I got", status: "make", draft: 9 },
+    { d: "2026-10-31", proj: "Client app (no name)", post: "The transactions that \"disappeared\"", types: ["text"], need: "Nothing", status: "ready", draft: 10 },
+    { d: "2026-11-01", off: true },
+  ]},
+  { title: "Week 2", theme: "Story week: the 3 sites nobody asked for", days: [
+    { d: "2026-11-02", proj: "All 3 concepts", post: "This month I built three websites nobody asked me to build", types: ["shot"], need: "One square hero screenshot of each concept site", status: "make", draft: 11 },
+    { d: "2026-11-03", proj: "Agency page", post: "The card that sells the least (\"Not sure yet?\")", types: ["shot"], need: "<code>service-6-not-sure-yet-light.jpg</code>", status: "ready", draft: 5 },
+    { d: "2026-11-04", proj: "Agency page", post: "The price field: \"+\" marks with a hole for the price, a wave on hover", types: ["rec"], need: "9–10s hover over the pricing cards. Crop or blur the prices, since they're placeholders", status: "make" },
+    { d: "2026-11-05", proj: "Dream Clean (concept)", post: "The story, and a dating-app quote form that remembers you after a refresh", types: ["rec", "code"], need: "12s phone recording: flip through the cards, refresh, answers still there. Reply with a generic snippet", status: "make", draft: 12 },
+    { d: "2026-11-06", proj: "Your laptop", post: "\"2.5 GB free on a 236 GB drive. Docker was sitting on 13 GB.\"", types: ["meme"], need: "Screenshot of the nearly-full drive in Windows", status: "make" },
+    { d: "2026-11-07", proj: "Brisbane Party Hire (concept)", post: "The story, plus before/after: a party hire site should feel like the party", types: ["ba"], need: "Old homepage and new hero, both square. Send the Instagram DM first", status: "make", draft: 13 },
+    { d: "2026-11-08", off: true },
+  ]},
+  { title: "Week 3", theme: "Craft and tech you can show off", days: [
+    { d: "2026-11-09", proj: "Virzi Projects (concept)", post: "The story, plus an isometric drawing that builds itself and turns in 3D", types: ["rec"], need: "12–15s of one drawing assembling, then dragged around. The ending needs the result of your 21 Oct call", status: "make", draft: 14 },
+    { d: "2026-11-10", proj: "Client site (no name)", post: "My host refused to deploy a client's site over a security flaw. Good.", types: ["text"], need: "Nothing (first check the CVE number is real)", status: "make" },
+    { d: "2026-11-11", proj: "Client app (no name)", post: "One ...spread took down checkout", types: ["code", "meme"], need: "A generic example Claude writes (never the client's code) + \"Me after making the app faster / The app refusing to sell anything\"", status: "make" },
+    { d: "2026-11-12", proj: "Lead hunter", post: "I spent 7 cents finding 5 local businesses worth building a site for", types: ["thread", "shot"], need: "Screenshot of the scoring table with names and contacts blurred", status: "make" },
+    { d: "2026-11-13", proj: "Brisbane Party Hire (concept)", post: "Butterflies: stock animation vs physics flying in groups of 3–4", types: ["meme", "rec"], need: "Drake meme, or 8–10s of the footer butterflies", status: "make" },
+    { d: "2026-11-14", proj: "All 3 concepts", post: "Update: where each pitch stands. Only what actually happened", types: ["text"], need: "Nothing. Write it on the day", status: "make" },
+    { d: "2026-11-15", off: true },
+  ]},
+  { title: "Week 4", theme: "Bigger pieces, and a look back at the month", days: [
+    { d: "2026-11-16", proj: "Landzun Association", post: "They sent 2 phone photos. Now you can stand on the land in your browser.", types: ["rec"], need: "12–15s of the panorama push-in, then a drag. Blur the address", status: "wait" },
+    { d: "2026-11-17", proj: "WhatsApp automation", post: "WhatsApp bots without a monthly bill, and the catch", types: ["text"], need: "Nothing", status: "ready" },
+    { d: "2026-11-18", proj: "Brisbane Party Hire (concept)", post: "I turned a product catalogue into die-cut stickers with a script", types: ["code", "shot"], need: "Part of make-stickers.ps1 + a grid of the finished stickers", status: "make" },
+    { d: "2026-11-19", proj: "Client app (no name)", post: "Ask your dev the dumb question: \"won't this break with lots of data?\" caught a real bug", types: ["text"], need: "Nothing", status: "ready" },
+    { d: "2026-11-20", proj: "All", post: "Poll: which build should I break down next?", types: ["text"], need: "4 options from the month's posts that did best", status: "ready" },
+    { d: "2026-11-21", proj: "All", post: "A month of posting every day: the real numbers", types: ["text", "shot"], need: "Your numbers from post-log.md", status: "make" },
+    { d: "2026-11-22", off: true },
+  ]},
+];
+
+const IMG = (p) => ({ src: "img/" + p.split("/").pop(), label: "exports/" + p });
+
+const DRAFTS = [
+  { group: "Agency page", n: 1, d: "2026-10-22", title: "Lights off",
+    format: "Single image, posted as a <strong>quote of your 21 Oct post</strong>",
+    imgs: [IMG("services-twitter-dark.jpg")], wide: true,
+    text: `same cards, lights off 🌙 light or dark?` },
+
+  { group: "Agency page", n: 6, d: "2026-10-23", title: "Voice typing",
+    format: "Text only, or a screenshot of the real prompt if you still have it",
+    text: `me: "brands people remember"
+voice typing: "bounce people remember"
+
+😭` },
+
+  { group: "Agency page", n: 2, d: "2026-10-24", title: "Shapes",
+    format: "4 square images, then reply with the last 2",
+    imgs: ["1-redesigns", "2-new-websites", "3-web-apps-ai", "4-seo-google"].map(s => IMG("service-cards-square/service-" + s + "-light-square.jpg")),
+    text: `every service card gets its own little shape so you get it before you read a word`,
+    reply: { imgs: ["5-care-updates", "6-not-sure-yet"].map(s => IMG("service-cards-square/service-" + s + "-light-square.jpg")),
+      text: `and these two` } },
+
+  { group: "Agency page", n: 7, d: "2026-10-26", title: "👀",
+    format: "Single video, 10–12 seconds",
+    make: "Hard-reload <code>/agency</code>, let the spinner turn into eyes, then hover your photo so the cards fan out.",
+    text: `made my headline actually do the "wait, I've seen this somewhere" thing 👀` },
+
+  { group: "Agency page", n: 3, d: "2026-10-27", title: "Near me",
+    format: "Single image", imgs: [IMG("service-cards/service-4-seo-google-dark.jpg")], wide: true,
+    text: `if you don't show up for "tailor near me", the guy two streets away with money in hand will never find you` },
+
+  { group: "Agency page", n: 8, d: "2026-10-28", title: "One line",
+    format: "Single image (code). Paste the line as text in a reply",
+    make: "Make a ray.so image of the line below.",
+    code: "padding-top: clamp(4px, calc(9.014vw - 29.8px), 100px);",
+    text: `4px on phones, 100px on desktop, one line of CSS` },
+
+  { group: "Agency page", n: 4, d: "2026-10-29", title: "The ghost",
+    format: "Single image", imgs: [IMG("service-cards/service-5-care-updates-light.jpg")], wide: true,
+    text: `wrote this card for everyone whose developer stopped replying on WhatsApp after launch 😭` },
+
+  { group: "Agency page", n: 9, d: "2026-10-30", title: "Read the diff",
+    format: "Single image (meme)",
+    make: "Two-panel meme. Top: <b>\"what I asked for: 2 LinkedIn icons\"</b>. Bottom: <b>\"what the AI did: redesigned the whole team section\"</b>.",
+    text: `always read the diff` },
+
+  { group: "Agency page", n: 10, d: "2026-10-31", title: "The 20 rows",
+    format: "Text only. No client name, no screenshots",
+    text: `client: "customers' transactions are disappearing"
+the database: has every single one
+the history page: only ever loaded 20` },
+
+  { group: "The concept sites", note: "Short post, with the story in a reply. Update the reply to where each pitch really stands on the day. No owner names or tags.",
+    n: 11, d: "2026-11-02", title: "Built first",
+    format: "3 images",
+    make: "Take square hero screenshots of the 3 concept sites.",
+    text: `built websites for 3 businesses that never asked me to. now I wait 👀`,
+    reply: { text: `a 40-year-old party hire company in Brisbane, a Melbourne cleaner with no website, and a builder with only Instagram. I'll tell you how each one goes` } },
+
+  { group: "The concept sites", n: 5, d: "2026-11-03", title: "Sells the least",
+    format: "Single image", imgs: [IMG("service-cards/service-6-not-sure-yet-light.jpg")], wide: true,
+    text: `my favourite card on my site is the one that sells the least` },
+
+  { group: "The concept sites", n: 12, d: "2026-11-05", title: "Dream Clean",
+    format: "Single video, about 12s at phone size",
+    make: "Record the card-stack quote form. Refresh halfway through and show the answers are still there. Don't show the AI \"founder\" photo.",
+    text: `a quote form that works like a dating app, for a cleaning company 🧹`,
+    reply: { text: `concept for The Dream Clean Agency in Melbourne. it remembers your answers even if you refresh. sent it to them 20 Oct, still waiting` } },
+
+  { group: "The concept sites", n: 13, d: "2026-11-07", title: "Brisbane Party Hire",
+    format: "2 square images, before then after",
+    make: "Old homepage (<code>assets\current-site-screenshots\home-desktop.png</code>) and the new hero. Send the Instagram DM before posting.",
+    text: `a party hire website should feel like the party 🎉`,
+    reply: { text: `concept for Brisbane Party Hire, 40+ years in business. the products are stickers you can drag around. emailed it to them 20 Oct, no reply yet` } },
+
+  { group: "The concept sites", n: 14, d: "2026-11-09", title: "Virzi",
+    format: "Single video, 12–15 seconds",
+    make: "One drawing builds itself, then you grab it and turn it in 3D.",
+    text: `builders think in drawings, so I made the website draw 🏗️`,
+    reply: { text: `concept for Virzi Projects, a new builder in the Hawkesbury.
+
+[ENDING: what happened on the 21 Oct call]` } },
+];
+
+const GUIDE = [
+  { t: "code", items: ["Use ray.so with a dark theme and one language", "At most 15 lines", "Paste the code as text in a reply so people can copy it", "Only post code that's marked safe, or a generic rewrite"] },
+  { t: "shot", items: ["One image: 16:9", "2–4 images: square, because X crops them", "Blur names, emails, phone numbers and prices", "Shot Studio (content-studio/mockup.html) gives them a nice frame"] },
+  { t: "rec", items: ["10–15 seconds. X only counts a view after about 8s", "Put one short line of text on the first frame, since most people watch muted", "MP4 at 1080p, no watermark", "Check the last frame for anything personal"] },
+  { t: "meme", items: ["imgflip.com works fine", "Only from real moments", "At most one a week", "The caption still says what you built"] },
+  { t: "text", items: ["Open with a specific claim or story", "Name the real thing: Google Maps, WhatsApp, a booking form", "Leave links for a reply"] },
+  { t: "ba", items: ["Two images, both square", "Before first, after second", "Be kind about the old site. Its owner might read it"] },
+];
+
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const chip = (t) => `<span class="chip" style="--c: var(${TYPES[t].c})"><i></i>${TYPES[t].label}</span>`;
+const fmtDay = (iso) => {
+  const dt = new Date(iso + "T12:00:00");
+  return { wd: dt.toLocaleDateString("en-GB", { weekday: "short" }), dm: dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" }) };
+};
+const todayIso = (() => { const n = new Date(); return new Date(n.getTime() - n.getTimezoneOffset() * 60000).toISOString().slice(0, 10); })();
+
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem("xplan-posted") || "{}"); } catch { return {}; } },
+  set(v) { try { localStorage.setItem("xplan-posted", JSON.stringify(v)); } catch {} },
+};
+let posted = store.get();
+
+document.getElementById("legend").innerHTML = Object.keys(TYPES).map(chip).join("") +
+  Object.entries(STATUS).map(([k, v]) => `<span class="status ${k}">${v}</span>`).join("");
+
+function renderWeeks() {
+  document.getElementById("weeks").innerHTML = WEEKS.map((w) => `
+    <div class="week">
+      <h3>${w.title}</h3>
+      <p class="theme">${w.theme}</p>
+      <div class="days">
+        ${w.days.map((day) => {
+          const { wd, dm } = fmtDay(day.d);
+          const isToday = day.d === todayIso;
+          const dateCol = `<div class="date"><b>${wd}</b>${dm}${isToday ? '<span class="today-tag">Today</span>' : ""}</div>`;
+          if (day.off) return `<div class="day off${isToday ? " today" : ""}">${dateCol}<div class="body">Off. Reply to people.</div></div>`;
+          const done = day.draft && posted[day.draft];
+          return `<div class="day${isToday ? " today" : ""}${done ? " posted" : ""}" id="day-${day.d}">
+            ${dateCol}
+            <div class="body">
+              <div class="proj">${esc(day.proj)}</div>
+              <div class="post">${esc(day.post)}</div>
+              <div class="need">${day.need}</div>
+              <div class="row">
+                ${day.types.map(chip).join("")}
+                <span class="status ${day.status}">${done ? "Posted" : STATUS[day.status]}</span>
+                ${day.draft ? `<a class="draft-link" href="#draft-${day.draft}">Draft ${day.draft} →</a>` : `<span class="need">Claude drafts this the week before</span>`}
+              </div>
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`).join("");
+}
+
+function imgsHtml(imgs, wide) {
+  if (!imgs || !imgs.length) return "";
+  return `<div class="imgs${wide ? " wide" : ""}">${imgs.map((i) =>
+    `<figure><img src="${i.src}" alt="${esc(i.label)}" loading="lazy"><figcaption>${esc(i.label)}</figcaption></figure>`).join("")}</div>`;
+}
+function tweetHtml(text) {
+  return `<div class="tweet">${text.split("\n\n").map((p) =>
+    p.startsWith("[") ? `<p class="placeholder">${esc(p)}</p>` : `<p>${esc(p)}</p>`).join("")}</div>`;
+}
+// X counts every emoji as 2 characters; close enough for a "fits in one post" check
+const xLen = (t) => [...t].reduce((n, ch) => n + (ch.codePointAt(0) > 0xffff ? 2 : 1), 0);
+function charsHtml(text) {
+  const n = xLen(text);
+  return `<span class="chars${n > 280 ? " over" : ""}">${n} characters${n > 280 ? " · needs X Premium for long posts, or trim" : ""}</span>`;
+}
+
+function renderDrafts() {
+  let lastGroup = "";
+  const ordered = [...DRAFTS];
+  document.getElementById("draft-groups").innerHTML = ordered.map((dr) => {
+    let head = "";
+    if (dr.group !== lastGroup) {
+      lastGroup = dr.group;
+      const note = DRAFTS.find((x) => x.group === dr.group && x.note);
+      head = `<p class="group-title">${esc(dr.group)}</p>${note ? `<p class="group-note">${esc(note.note)}</p>` : ""}`;
+    }
+    const { wd, dm } = fmtDay(dr.d);
+    const done = !!posted[dr.n];
+    return `${head}<div class="cards"><article class="card${done ? " posted" : ""}" id="draft-${dr.n}">
+      <div class="card-head">
+        <h3><span class="num">#${dr.n}</span>${esc(dr.title)}</h3>
+        <span class="when">${wd} ${dm}</span>
+      </div>
+      <div class="format"><strong>Format:</strong> ${dr.format}</div>
+      ${dr.make ? `<div class="make"><b>Make first:</b> ${dr.make}</div>` : ""}
+      ${dr.code ? `<pre class="code">${esc(dr.code)}</pre>` : ""}
+      ${imgsHtml(dr.imgs, dr.wide)}
+      ${tweetHtml(dr.text)}
+      <div class="actions">
+        <button class="primary" data-copy="${dr.n}">Copy post text</button>
+        ${dr.code ? `<button data-copycode="${dr.n}">Copy code</button>` : ""}
+        <button data-posted="${dr.n}" aria-pressed="${done}">${done ? "Posted ✓" : "Mark as posted"}</button>
+        ${charsHtml(dr.text)}
+        <span class="copied" id="copied-${dr.n}" aria-live="polite"></span>
+      </div>
+      ${dr.reply ? `<div class="reply">
+        <span class="reply-label">Reply to yourself</span>
+        ${imgsHtml(dr.reply.imgs)}
+        ${tweetHtml(dr.reply.text)}
+        <div class="actions"><button data-copyreply="${dr.n}">Copy reply text</button><span class="copied" id="copiedr-${dr.n}" aria-live="polite"></span></div>
+      </div>` : ""}
+    </article></div>`;
+  }).join("");
+}
+
+function renderGuide() {
+  document.getElementById("guide").innerHTML = GUIDE.map((g) =>
+    `<div class="g"><h4>${chip(g.t)}</h4><ul>${g.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>`).join("");
+}
+
+function renderNext() {
+  const all = WEEKS.flatMap((w) => w.days).filter((d) => !d.off);
+  const next = all.find((d) => d.d >= todayIso && !(d.draft && posted[d.draft]));
+  const el = document.getElementById("next");
+  if (!next) { el.hidden = true; return; }
+  const { wd, dm } = fmtDay(next.d);
+  el.innerHTML = `<div class="eyebrow">${next.d === todayIso ? "Today's post" : "Next post · " + wd + " " + dm}</div>
+    <h2>${esc(next.post)}</h2>
+    <div class="meta">${esc(next.proj)} · ${next.types.map((t) => TYPES[t].label).join(" + ")}</div>
+    ${next.draft ? `<a class="go" href="#draft-${next.draft}">Open draft ${next.draft}</a>` : `<a class="go" href="#day-${next.d}">See the plan</a>`}`;
+  el.hidden = false;
+}
+
+async function copyText(text, statusEl, triggerEl) {
+  try {
+    await navigator.clipboard.writeText(text);
+    statusEl.textContent = "Copied";
+  } catch {
+    const card = triggerEl.closest(".card, .reply");
+    const tw = card && card.querySelector(".tweet");
+    if (tw) { const r = document.createRange(); r.selectNodeContents(tw); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    statusEl.textContent = "Selected. Press Ctrl+C to copy";
+  }
+  setTimeout(() => { statusEl.textContent = ""; }, 2500);
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  const find = (n) => DRAFTS.find((d) => d.n === Number(n));
+  if (b.dataset.copy) copyText(find(b.dataset.copy).text, document.getElementById("copied-" + b.dataset.copy), b);
+  if (b.dataset.copycode) copyText(find(b.dataset.copycode).code, document.getElementById("copied-" + b.dataset.copycode), b);
+  if (b.dataset.copyreply) copyText(find(b.dataset.copyreply).reply.text, document.getElementById("copiedr-" + b.dataset.copyreply), b);
+  if (b.dataset.posted) {
+    const n = b.dataset.posted;
+    if (posted[n]) delete posted[n]; else posted[n] = todayIso;
+    store.set(posted);
+    renderAll();
+    const card = document.getElementById("draft-" + n);
+    if (card) card.querySelector("[data-posted]").focus();
+  }
+});
+
+function renderAll() { renderWeeks(); renderDrafts(); renderNext(); }
+renderAll();
+renderGuide();
+</script>
