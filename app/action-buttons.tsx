@@ -2,24 +2,9 @@
 
 import { useRef, useState } from "react";
 import { TextMorph } from "torph/react";
+import { buttonDark as dark, buttonLight as light } from "./button-styles";
 
 const EMAIL = "s00laimang@icloud.com";
-
-const base =
-  "inline-flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 text-sm font-medium " +
-  "transition-all duration-150 active:scale-[0.97]";
-
-const dark =
-  base +
-  " text-white bg-gradient-to-b from-[#4a4a48] via-[#262624] to-[#161614] " +
-  "shadow-[inset_0_1.5px_0_rgba(255,255,255,0.25),inset_0_-2px_6px_rgba(0,0,0,0.5),0_0_18px_rgba(0,0,0,0.18),0_10px_22px_-8px_rgba(0,0,0,0.55)] " +
-  "hover:brightness-110 active:brightness-95";
-
-const light =
-  base +
-  " text-[#21201c] bg-gradient-to-b from-white via-[#f6f4f0] to-[#eae7e1] " +
-  "shadow-[inset_0_1.5px_0_rgba(255,255,255,0.9),inset_0_-2px_5px_rgba(0,0,0,0.08),0_0_16px_rgba(0,0,0,0.08),0_10px_22px_-10px_rgba(0,0,0,0.3)] " +
-  "hover:brightness-[1.02] active:brightness-95";
 
 export function ActionButtons() {
   const [copied, setCopied] = useState(false);
