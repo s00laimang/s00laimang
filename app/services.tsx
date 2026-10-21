@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
+import { EMAIL, bookCall } from "./contact";
 import { GRAIN } from "./showcase";
 
-const EMAIL = "s00laimang@icloud.com";
 
 type Shape = "blocks" | "browser" | "orbit" | "bars" | "moons" | "question";
 
@@ -319,7 +319,9 @@ function ServiceCard({
 
       {showCta && (
         <a
-          href={`mailto:${EMAIL}?subject=${encodeURIComponent(subject)}`}
+          {...(shape === "question"
+            ? bookCall
+            : { href: `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}` })}
           className={`group relative inline-flex w-fit items-center gap-2 border-b border-foreground/60 pb-0.5 text-[14px] font-medium transition-colors hover:border-foreground ${square ? "mt-10" : "mt-auto pt-8"}`}
         >
           {cta}

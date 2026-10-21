@@ -3,9 +3,9 @@
 import { useRef, useState } from "react";
 import { TextMorph } from "torph/react";
 import { buttonPrimaryLarge, buttonSecondaryLarge } from "../button-styles";
+import { EMAIL, bookCall } from "../contact";
 import { GRAIN } from "../showcase";
 
-const EMAIL = "s00laimang@icloud.com";
 
 const EXPLORE = [
   { label: "Services", href: "/agency#services" },
@@ -76,7 +76,7 @@ export function AgencyFooter() {
             Tell me what you sell. I&apos;ll handle the rest.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href={`mailto:${EMAIL}`} className={buttonPrimaryLarge}>
+            <a {...bookCall} className={buttonPrimaryLarge}>
               Book a call
               <svg viewBox="0 0 16 16" className="size-4 fill-none stroke-current stroke-[1.6] opacity-80" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M3 8h10M9 4l4 4-4 4" />

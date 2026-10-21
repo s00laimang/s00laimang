@@ -6,12 +6,12 @@ import {
   buttonPrimaryLarge,
   buttonSecondaryLarge,
 } from "../button-styles";
+import { bookCall } from "../contact";
 import { LogoStack } from "./logo-stack";
 import { MobileMenu } from "./mobile-menu";
 
 const hand = Caveat({ subsets: ["latin"], weight: ["500", "600"] });
 
-const EMAIL = "s00laimang@icloud.com";
 
 // full paths so the nav also works from /agency/projects; on /agency itself
 // the browser treats them as same-page jumps. Work goes to its own page.
@@ -46,7 +46,7 @@ export function AgencyNav({ active = "Agency" }: { active?: string }) {
       </nav>
       <div className="flex items-center gap-2">
         <MobileMenu items={NAV} active={active} />
-        <a href={`mailto:${EMAIL}`} className={buttonPrimary}>
+        <a {...bookCall} className={buttonPrimary}>
           Book a call
         </a>
       </div>
@@ -164,7 +164,7 @@ export function Hero() {
       </p>
 
       <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-        <a href={`mailto:${EMAIL}`} className={buttonPrimaryLarge}>
+        <a {...bookCall} className={buttonPrimaryLarge}>
           <CalendarIcon />
           Book a call
         </a>

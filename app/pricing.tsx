@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 import { buttonPrimary, buttonSecondary } from "./button-styles";
+import { EMAIL } from "./contact";
 import { GRAIN } from "./showcase";
 
-const EMAIL = "s00laimang@icloud.com";
 const INK = "#7d766c";
 
 // PLACEHOLDER prices — swap for real ones before this goes on /agency
