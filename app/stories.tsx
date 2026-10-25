@@ -33,6 +33,9 @@ const RESELLOS = i("/story/resellos-logo.svg", "Resellos");
 const LOOTA = i("/story/loota-mark.png", "Loota");
 const WHATSAPP = i("/story/whatsapp.com.ico", "WhatsApp");
 const SUI = i("/story/sui.png", "Sui");
+const POSH = i("/story/posh-logo.svg", "Posh Party Hire");
+const ARPS = i("/story/arps-icon.png", "Allround Pro Services");
+const LJW = i("/story/ljw-logo.jpg", "LJW Concrete Solutions");
 
 export const STORIES: Record<string, Story> = {
   askoga: {
@@ -429,6 +432,148 @@ export const STORIES: Record<string, Story> = {
           "The email went out at 9am Brisbane time with the subject “Your website tells Google you're in Victoria”. Follow-ups are scheduled.",
         ],
       },
+    ],
+  },
+
+  poshpartyhire: {
+    role: "Design & build",
+    year: "2026",
+    kind: "Pitch site",
+    headline: [
+      POSH,
+      " Perth gives Posh Party Hire 4.8 stars on Google. The only way to book was a DM.",
+    ],
+    blocks: [
+      {
+        p: [
+          "Emina runs",
+          POSH,
+          " Posh Party Hire: photo booths, backdrops, an audio guestbook and acrylic signs for weddings and parties around Perth. 19 of her 20 Google reviews are five stars.",
+        ],
+      },
+      {
+        p: [
+          "There was no website and no link in her bio. A bride planning months ahead couldn't see a package, a gallery or whether her date was free without sending a message first.",
+        ],
+      },
+      {
+        p: [
+          "So I built her one. It opens like a photo booth on burst mode: one print flips through 27 of her photos, faster and faster, then a flash goes off and the page swings open like a wedding album.",
+        ],
+      },
+      {
+        p: [
+          "Her hire items lie on a party table: a photo strip, the guestbook phone, pearls, a disco ball. They drift with your cursor, and you can pick them up and move them.",
+        ],
+      },
+      {
+        p: [
+          "Eight real reviews became guest book pages with wax seals. And instead of a form, you fill in the blanks of a note to Emina. Send it and a stamp presses onto a tear-off calendar page. It says sent, not booked, because only Emina can confirm a date.",
+        ],
+      },
+      { quote: "Perfect. This is the missing piece.", by: "me, when the heading font went in" },
+      {
+        stats: [
+          { value: "4.8", label: "stars from 20 Google reviews" },
+          { value: "8", label: "reviews in the guest book" },
+          { value: "27", label: "photos in the opening flip" },
+        ],
+      },
+      { p: ["The preview is live. Emina hasn't seen it yet."] },
+    ],
+  },
+
+  allroundproservices: {
+    role: "Design & build",
+    year: "2026",
+    kind: "Pitch site",
+    headline: [
+      ARPS,
+      " Frank does lawns, house cleans and car detailing in Adelaide. Outside Instagram, nobody could find him.",
+    ],
+    blocks: [
+      {
+        p: [
+          "Frank runs",
+          ARPS,
+          " Allround Pro Services on his own, and every booking comes through Instagram. He posts almost every day. About 60 of his last 84 posts are the same “now taking bookings” graphic, posted again and again.",
+        ],
+      },
+      {
+        p: [
+          "There was no website and no Google listing, so all that posting had nowhere to send people.",
+        ],
+      },
+      {
+        p: [
+          "So I built him one without being asked. My first version wasn't good enough, so I threw it away and rebuilt it one section at a time.",
+        ],
+      },
+      {
+        p: [
+          "The menu links sit on a little wheel that turns as you scroll, so it always faces the section you're reading. Tap a service at the top and the quote form opens with that service already picked.",
+        ],
+      },
+      {
+        p: [
+          "The form asks how Frank should reach you: a phone number, an email or your Instagram handle. You can add up to five photos of the yard, the room or the car, straight from an iPhone.",
+        ],
+      },
+      {
+        p: [
+          "There's also a note from Frank, written only from phrases in his own captions and signed in handwriting.",
+        ],
+      },
+      { quote: "I love what you just did.", by: "me, the moment Frank's note went in" },
+      { stats: [{ value: "84", label: "of his Instagram posts read before I drew anything" }] },
+      { p: ["The preview is live. Frank hears about it next."] },
+    ],
+  },
+
+  ljwconcrete: {
+    role: "Design & build",
+    year: "2026",
+    kind: "Pitch site",
+    headline: [
+      LJW,
+      " Lachy pours driveways across Wollondilly and Macarthur. His quotes started on a Linktree.",
+    ],
+    blocks: [
+      {
+        p: [
+          LJW,
+          " LJW Concrete Solutions is Lachy Wells and his crew: driveways, shed slabs, paths and pool surrounds. His posts name 22 suburbs where they've poured.",
+        ],
+      },
+      {
+        p: [
+          "With no website, anyone who wanted a quote went from his Instagram bio to a Linktree to a Jotform. His reels keep getting more likes, and none of that attention landed anywhere he owned.",
+        ],
+      },
+      {
+        p: [
+          "So I built him a site that feels like his trade: heavy, tight and stacked. Every button, title and menu is a Tetris piece that locks into the next.",
+        ],
+      },
+      {
+        p: [
+          "Recent jobs play like a short film. Each one steps through real photos, from the dig to the mesh to the finished slab, while a job sheet written from his captions lights up the stage you're on.",
+        ],
+      },
+      {
+        p: [
+          "The areas he covers are four Tetris pieces laid over the real map, with every suburb from his posts marked on top. The quote form takes your suburb, the job, its size and up to four photos, so Lachy sees the job before he calls you back.",
+        ],
+      },
+      { quote: "Perfect. I love this now.", by: "me, when the job sheet clicked" },
+      {
+        stats: [
+          { value: "87", label: "Instagram posts read" },
+          { value: "348", label: "job photos to pick from" },
+          { value: "22", label: "suburbs on the map" },
+        ],
+      },
+      { p: ["The preview is live. Lachy's message is next."] },
     ],
   },
 };
