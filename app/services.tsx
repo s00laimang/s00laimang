@@ -313,7 +313,7 @@ function ServiceCard({
       </span>
 
       <h3 className={`relative font-serif tracking-tight ${square ? "mt-auto text-5xl" : "mt-10 text-3xl"}`}>{title}</h3>
-      <p className={`relative mt-2 max-w-[60%] leading-[1.6] text-muted ${square ? "text-[17px]" : "text-[15px]"}`}>
+      <p className="relative mt-2 max-w-[60%] text-[15px] leading-[1.6] text-muted">
         {body}
       </p>
 
